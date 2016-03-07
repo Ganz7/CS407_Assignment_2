@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CalendarView;
+import android.widget.Toast;
 
 
 public class CalendarMainActivity extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class CalendarMainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         initializeCalendar();
+        setAndHandleDateSelect();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +38,20 @@ public class CalendarMainActivity extends AppCompatActivity {
 
     private void initializeCalendar(){
         calendar = (CalendarView) findViewById(R.id.calendar_main_view);
+    }
+
+    /**
+     * Sets the DateChangeListener for the calendar view and handles
+     * onSelectDayChange events
+     */
+    private void setAndHandleDateSelect(){
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                Toast.makeText(getApplicationContext(), (month + 1) + "/" + dayOfMonth +
+                        "/" + year, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
