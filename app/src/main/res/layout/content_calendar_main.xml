@@ -12,8 +12,10 @@
     tools:context="com.wisc.ganz.calendary.CalendarMainActivity"
     tools:showIn="@layout/activity_calendar_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <CalendarView
+        android:id="@+id/calendar_main_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </CalendarView>
+
 </RelativeLayout>
