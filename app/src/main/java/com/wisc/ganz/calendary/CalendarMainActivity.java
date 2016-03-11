@@ -102,7 +102,9 @@ public class CalendarMainActivity extends AppCompatActivity {
                 selArgs,
                 null);
         if (cursor.moveToFirst()) {
-            return cursor.getLong(0);
+            long returnValue = cursor.getLong(0);
+            cursor.close();
+            return returnValue;
         }
         return -1;
     }
