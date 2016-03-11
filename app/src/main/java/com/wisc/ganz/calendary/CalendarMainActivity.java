@@ -1,20 +1,23 @@
 package com.wisc.ganz.calendary;
 
+import android.content.ContentValues;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Calendars;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Toast;
-
 
 public class CalendarMainActivity extends AppCompatActivity {
 
     CalendarView calendar;
+    ContentValues values;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,8 @@ public class CalendarMainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initializeCalendar();
+        initializeCalendarView();
+        createCalendar();
         setAndHandleDateSelect();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -36,7 +40,7 @@ public class CalendarMainActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeCalendar(){
+    private void initializeCalendarView(){
         calendar = (CalendarView) findViewById(R.id.calendar_main_view);
     }
 
@@ -52,6 +56,18 @@ public class CalendarMainActivity extends AppCompatActivity {
                         "/" + year, Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void createCalendar(){
+        values = new ContentValues();
+        values.put(Calendars.ACCOUNT_NAME, "CYUserAccount");
+        values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);// Do not sync
+        values.put(Calendars.NAME, "CYCalendar");
+        values.put(Calendars.CALENDAR_DISPLAY_NAME, "407's Calendar");
+        values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
+        values.put(Calendars.OWNER_ACCOUNT, "ganzse7en@gmail.com");
+        values.put(Calendars.CALENDAR_TIME_ZONE, "America/Chicago");
+        values.put(Calendars.SYNC_EVENTS, 1); //Store the contents on the device
     }
 
     @Override
