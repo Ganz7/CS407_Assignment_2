@@ -3,15 +3,14 @@ package com.wisc.ganz.calendary;
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -26,8 +25,8 @@ public class CalendarMainActivity extends AppCompatActivity {
     ContentValues values;
     Uri calendarURI;
 
-    static final int MY_PERMISSIONS_REQUEST_READ_CALENDAR = 10001;
-    static final int MY_PERMISSIONS_REQUEST_WRITE_CALENDAR = 10002;
+    static final int MY_PERMISSIONS_REQUEST_RW_CALENDAR = 101;
+    static final String ACCOUNT_NAME = "CYUserAccount";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +35,6 @@ public class CalendarMainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //requestPermissions();
-        //checkPermissions();
         initializeCalendarView();
         createCalendar();
         setAndHandleDateSelect();
@@ -52,26 +49,8 @@ public class CalendarMainActivity extends AppCompatActivity {
         });
     }
 
-    private void requestPermissions(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission_group.CALENDAR) != PackageManager.PERMISSION_GRANTED ) {
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission_group.CALENDAR},
-                    MY_PERMISSIONS_REQUEST_READ_CALENDAR);
-        }
-    }
-
-    private void checkPermissions(){
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( this, Manifest.permission.READ_CALENDAR )
-                        != PackageManager.PERMISSION_GRANTED &&
-                ContextCompat.checkSelfPermission( this, Manifest.permission.WRITE_CALENDAR)
-                        != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-    }
-
-    private void initializeCalendarView(){
+    private void initializeCalendarView() {
         calendar = (CalendarView) findViewById(R.id.calendar_main_view);
     }
 
@@ -79,7 +58,7 @@ public class CalendarMainActivity extends AppCompatActivity {
      * Sets the DateChangeListener for the calendar view and handles
      * onSelectDayChange events
      */
-    private void setAndHandleDateSelect(){
+    private void setAndHandleDateSelect() {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
@@ -89,9 +68,9 @@ public class CalendarMainActivity extends AppCompatActivity {
         });
     }
 
-    private void createCalendar(){
+    private void createCalendar() {
         values = new ContentValues();
-        values.put(Calendars.ACCOUNT_NAME, "CYUserAccount");
+        values.put(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
         values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);// Do not sync
         values.put(Calendars.NAME, "CYCalendar");
         values.put(Calendars.CALENDAR_DISPLAY_NAME, "407's Calendar");
@@ -101,11 +80,63 @@ public class CalendarMainActivity extends AppCompatActivity {
         values.put(Calendars.SYNC_EVENTS, 1); //Store the contents on the device
 
         Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
-        builder.appendQueryParameter(Calendars.ACCOUNT_NAME, "CYUserAccount");
+        builder.appendQueryParameter(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
         builder.appendQueryParameter(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
         builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
         calendarURI = getContentResolver().insert(builder.build(), values);
+
+        long calendarID = getCalendarId();
+        Toast.makeText(this, "ID is"+calendarID, Toast.LENGTH_LONG).show();
     }
+
+    private long getCalendarId() {
+        String[] projection = new String[]{Calendars._ID};
+        String selection = Calendars.ACCOUNT_NAME + " = ? AND " + Calendars.ACCOUNT_TYPE + " = ? ";
+        String[] selArgs = new String[]{ACCOUNT_NAME, CalendarContract.ACCOUNT_TYPE_LOCAL};
+
+        checkForAndRequestPermission();
+        Cursor cursor = getContentResolver().query(
+                Calendars.CONTENT_URI,
+                projection,
+                selection,
+                selArgs,
+                null);
+        if (cursor.moveToFirst()) {
+            return cursor.getLong(0);
+        }
+        return -1;
+    }
+
+    private void checkForAndRequestPermission(){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission_group.CALENDAR) !=
+                PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission_group.CALENDAR},
+                    MY_PERMISSIONS_REQUEST_RW_CALENDAR);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_RW_CALENDAR: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted. Carry on
+
+                } else {
+                    // permission was denied.
+                    // Obviously not production ready. But works for this assignment
+
+                }
+                return;
+            }
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
