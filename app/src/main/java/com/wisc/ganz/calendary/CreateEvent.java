@@ -12,12 +12,16 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class CreateEvent extends AppCompatActivity {
 
@@ -120,14 +124,38 @@ public class CreateEvent extends AppCompatActivity {
 
     private void extractDataAndAddEvent(){
 
-        String et_title = et_titleText.getText().toString();
-        String et_startDate = et_startDateText.getText().toString();
-        String et_startTime = et_startTimeText.getText().toString();
-        String et_endDate = et_endDateText.getText().toString();
-        String et_endTime = et_endTimeText.getText().toString();
-        String et_description = et_descriptionText.getText().toString();
+        String et_title = et_titleText.getText().toString().trim();
+        String et_startDate = et_startDateText.getText().toString().trim();
+        String et_startTime = et_startTimeText.getText().toString().trim();
+        String et_endDate = et_endDateText.getText().toString().trim();
+        String et_endTime = et_endTimeText.getText().toString().trim();
+        String et_description = et_descriptionText.getText().toString().trim();
 
-        Toast.makeText(this, et_title + " " + et_startDate + " " +et_startTime+" "+
+        String startDateString = et_startDate + " " + et_startTime;
+        String endDateString = et_endDate + " " + et_endTime;
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm"); //Custom time format
+
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = format.parse(startDateString);
+            endDate = format.parse(startDateString);
+        } catch (ParseException e) {
+            Log.e("Parse Exception", "Error : "+e.getMessage());
+        }
+
+        long startMillis = startDate.getTime();
+        long endMillis = endDate.getTime();
+
+        //If the event is in reverse chronological order, do not add
+        if(startMillis > endMillis){
+            Toast.makeText(this, R.string.reverse_date_message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+
+        Toast.makeText(this, et_title + " " + startDateString +" " +
         et_endDate + " " + et_endTime+ " " + et_description, Toast.LENGTH_LONG).show();
 
     }
