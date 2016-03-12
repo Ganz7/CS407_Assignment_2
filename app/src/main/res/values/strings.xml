@@ -2,4 +2,15 @@
     <string name="app_name">Calendar Y</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_create_event">Create Event</string>
+
+    <!--Edit Text-->
+    <string name="et_title_hint">Enter Event Title</string>
+    <string name="et_start_date_hint">Enter Start Date</string>
+    <string name="et_start_time_hint">Enter Start Time</string>
+    <string name="et_end_date_hint">Enter End Date</string>
+    <string name="et_end_time_hint">Enter End Time</string>
+
+    <!--Text View-->
+    <string name="tv_start_date">Event Start</string>
+    <string name="tv_end_date">Event End</string>
 </resources>
