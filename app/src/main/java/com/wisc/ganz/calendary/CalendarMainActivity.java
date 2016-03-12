@@ -2,7 +2,6 @@ package com.wisc.ganz.calendary;
 
 import android.Manifest;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -43,8 +42,8 @@ public class CalendarMainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent createIntent = new Intent(view.getContext(), CreateEvent.class);
-                startActivity(createIntent);
+                //Intent createIntent = new Intent(view.getContext(), CreateEvent.class);
+                //startActivity(createIntent);
             }
         });
     }
