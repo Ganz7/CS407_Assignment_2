@@ -28,6 +28,8 @@ public class CalendarMainActivity extends AppCompatActivity {
     static final int MY_PERMISSIONS_REQUEST_RW_CALENDAR = 101;
     static final String ACCOUNT_NAME = "CYUserAccount";
     static final String CALENDAR_ID_STRING = "CALENDAR_ID";
+    static final String SELECTED_DATE_STRING = "SELECTED_DATE";
+
     static long CALENDAR_ID;
 
     @Override
@@ -65,8 +67,13 @@ public class CalendarMainActivity extends AppCompatActivity {
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Toast.makeText(getApplicationContext(), (month + 1) + "/" + dayOfMonth +
-                        "/" + year, Toast.LENGTH_LONG).show();
+                String date = String.format("%02d", (month+1)) + "/" +
+                        String.format("%02d", dayOfMonth) + "/" + year;
+                Toast.makeText(getApplicationContext(), date, Toast.LENGTH_SHORT).show();
+
+                Intent viewEventsIntent = new Intent(view.getContext(), ViewEvents.class);
+                viewEventsIntent.putExtra(SELECTED_DATE_STRING, date);
+                startActivity(viewEventsIntentg);
             }
         });
     }
