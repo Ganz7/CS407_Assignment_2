@@ -43,7 +43,7 @@ public class CreateEvent extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
-        CALENDAR_ID = Long.parseLong(extras.getString(CALENDAR_ID_STRING));
+        CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeAndSetListeners();
@@ -108,7 +108,7 @@ public class CreateEvent extends AppCompatActivity {
         values.put(Events.DTEND, endMillis);
         values.put(Events.TITLE, title);
         values.put(Events.DESCRIPTION, description);
-        values.put(Events.CALENDAR_ID, CALENDAR_IDgi);
+        values.put(Events.CALENDAR_ID, CALENDAR_ID);
         values.put(Events.EVENT_TIMEZONE, "America/Chicago");
 
         checkForAndRequestPermission();
@@ -116,7 +116,8 @@ public class CreateEvent extends AppCompatActivity {
         Uri uri = cr.insert(Events.CONTENT_URI, values);
 
         long eventID = Long.parseLong(uri.getLastPathSegment());
-        Toast.makeText(this, "Event ID is" + eventID, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Event ID is" + eventID, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Cal ID is" + CALENDAR_ID, Toast.LENGTH_SHORT).show();
     }
 
     private void extractDataAndAddEvent(){
@@ -161,6 +162,9 @@ public class CreateEvent extends AppCompatActivity {
         et_endDate + " " + et_endTime+ " " + et_description, Toast.LENGTH_LONG).show();
 
         addEvent(et_title, startMillis, endMillis, et_description);
+
+        //Activity Done. Call Finish.
+        finish();
     }
 
     /***
