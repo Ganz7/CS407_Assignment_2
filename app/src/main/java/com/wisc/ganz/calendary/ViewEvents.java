@@ -19,8 +19,9 @@ public class ViewEvents extends AppCompatActivity {
 
     static final String SELECTED_DATE_STRING = "SELECTED_DATE";
     static long NUMBER_OF_MILLIS_IN_A_DAY = 86700000;
-
-    private String selected_date;
+    private long CALENDAR_ID;
+    private static final String CALENDAR_ID_STRING = "CALENDAR_ID";
+    private String SELECTED_DATE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,11 @@ public class ViewEvents extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        selected_date = extras.getString(SELECTED_DATE_STRING);
+        SELECTED_DATE = extras.getString(SELECTED_DATE_STRING);
+        CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING);
 
-        getEvent(selected_date);
+
+        getEvent(SELECTED_DATE);
     }
 
     private void getEvent(String dateString){
@@ -70,9 +73,12 @@ public class ViewEvents extends AppCompatActivity {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                if(cursor.getLong(0) == 5)
-                Toast.makeText(this.getApplicationContext(), "In GETEVENTS Title: " + cursor.getString(1) +
-                        " Start-Time: " + (new Date(cursor.getLong(3))).toString(), Toast.LENGTH_SHORT).show();
+                //Only display events for this app's calendar
+                if(cursor.getLong(0) == CALENDAR_ID) {
+
+                    Toast.makeText(this.getApplicationContext(), "In GETEVENTS Title: " + cursor.getString(1) +
+                            " Start-Time: " + (new Date(cursor.getLong(3))).toString(), Toast.LENGTH_SHORT).show();
+                }
             } while ( cursor.moveToNext());
         }
     }

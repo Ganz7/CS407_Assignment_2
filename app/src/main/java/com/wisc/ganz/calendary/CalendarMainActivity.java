@@ -73,6 +73,7 @@ public class CalendarMainActivity extends AppCompatActivity {
 
                 Intent viewEventsIntent = new Intent(view.getContext(), ViewEvents.class);
                 viewEventsIntent.putExtra(SELECTED_DATE_STRING, date);
+                viewEventsIntent.putExtra(CALENDAR_ID_STRING, CALENDAR_ID);
                 startActivity(viewEventsIntent);
             }
         });
