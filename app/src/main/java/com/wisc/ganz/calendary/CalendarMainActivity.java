@@ -2,6 +2,7 @@ package com.wisc.ganz.calendary;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -43,8 +43,8 @@ public class CalendarMainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent createIntent = new Intent(view.getContext(), CreateEvent.class);
+                startActivity(createIntent);
             }
         });
     }
@@ -69,24 +69,31 @@ public class CalendarMainActivity extends AppCompatActivity {
     }
 
     private void createCalendar() {
-        values = new ContentValues();
-        values.put(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
-        values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);// Do not sync
-        values.put(Calendars.NAME, "CYCalendar");
-        values.put(Calendars.CALENDAR_DISPLAY_NAME, "407's Calendar");
-        values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
-        values.put(Calendars.OWNER_ACCOUNT, "ganzse7en@gmail.com");
-        values.put(Calendars.CALENDAR_TIME_ZONE, "America/Chicago");
-        values.put(Calendars.SYNC_EVENTS, 1); //Store the contents on the device
-
-        Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
-        builder.appendQueryParameter(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
-        builder.appendQueryParameter(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
-        builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
-        calendarURI = getContentResolver().insert(builder.build(), values);
-
         long calendarID = getCalendarId();
-        Toast.makeText(this, "ID is"+calendarID, Toast.LENGTH_LONG).show();
+        if(calendarID != -1){
+            Toast.makeText(this, "Calendar already exists is "+calendarID, Toast.LENGTH_LONG).show();
+        }
+        else {
+            values = new ContentValues();
+            values.put(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
+            values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);// Do not sync
+            values.put(Calendars.NAME, "CalYCalendar");
+            values.put(Calendars.CALENDAR_DISPLAY_NAME, "CS407's Calendar");
+            values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
+            values.put(Calendars.OWNER_ACCOUNT, "ganzse7en@gmail.com");
+            values.put(Calendars.CALENDAR_TIME_ZONE, "America/Chicago");
+            values.put(Calendars.SYNC_EVENTS, 1); //Store the contents on the device
+            values.put(Calendars.VISIBLE, 1);
+
+            Uri.Builder builder = CalendarContract.Calendars.CONTENT_URI.buildUpon();
+            builder.appendQueryParameter(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
+            builder.appendQueryParameter(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+            builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
+            calendarURI = getContentResolver().insert(builder.build(), values);
+
+            calendarID = getCalendarId();
+            Toast.makeText(this, "New Calendar:" + calendarID, Toast.LENGTH_LONG).show();
+        }
     }
 
     private long getCalendarId() {
@@ -101,10 +108,12 @@ public class CalendarMainActivity extends AppCompatActivity {
                 selection,
                 selArgs,
                 null);
-        if (cursor.moveToFirst()) {
-            long returnValue = cursor.getLong(0);
-            cursor.close();
-            return returnValue;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                long returnValue = cursor.getLong(0);
+                cursor.close();
+                return returnValue;
+            }
         }
         return -1;
     }
@@ -115,6 +124,7 @@ public class CalendarMainActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission_group.CALENDAR},
                     MY_PERMISSIONS_REQUEST_RW_CALENDAR);
+            return;
         }
     }
 
@@ -134,7 +144,6 @@ public class CalendarMainActivity extends AppCompatActivity {
                     // Obviously not production ready. But works for this assignment
 
                 }
-                return;
             }
         }
     }
