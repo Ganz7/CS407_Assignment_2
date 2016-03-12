@@ -57,18 +57,26 @@ public class CreateEvent extends AppCompatActivity {
         EditTextDatePicker startDatePicker = new EditTextDatePicker(this, R.id.editText_start_date);
         EditTextDatePicker endDatePicker = new EditTextDatePicker(this, R.id.editText_end_date);
 
-        et_startTimeText.setOnClickListener(new View.OnClickListener() {
+        setOnClickListenerHelper(et_startTimeText);
+        setOnClickListenerHelper(et_endimeText);
+
+
+    }
+
+    public void setOnClickListenerHelper(final EditText et){
+        et.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
+                Calendar currentTime = Calendar.getInstance();
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = currentTime.get(Calendar.MINUTE);
+
                 TimePickerDialog mTimePicker;
                 //Display a 24-hour format timepicker dialog and set the edit text on selection
                 mTimePicker = new TimePickerDialog(CreateEvent.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        et_startTimeText.setText( String.format("%02d",selectedHour) + ":" +
+                        et.setText( String.format("%02d",selectedHour) + ":" +
                                 String.format("%02d",selectedMinute));
                     }
                 }, hour, minute, true);
@@ -76,7 +84,6 @@ public class CreateEvent extends AppCompatActivity {
                 mTimePicker.show();
             }
         });
-
     }
     /***
      * Adds an event with the specified arguments to the calendar
