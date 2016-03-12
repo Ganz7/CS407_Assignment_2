@@ -86,10 +86,10 @@ public class CreateEvent extends AppCompatActivity {
     }
     /***
      * Adds an event with the specified arguments to the calendar
-     * @param title
-     * @param startMillis
-     * @param endMillis
-     * @param description
+     * @param title         Event Title
+     * @param startMillis   Start time of event in milliseconds
+     * @param endMillis     End time of event in milliseconds
+     * @param description   Event Description
      */
     private void addEvent(String title, long startMillis, long endMillis, String description) {
         long calID = 5;
