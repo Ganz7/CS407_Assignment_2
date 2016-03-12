@@ -19,6 +19,13 @@ import java.util.Calendar;
 
 public class CreateEvent extends AppCompatActivity {
 
+    private EditText et_titleText;
+    private EditText et_startDateText;
+    private EditText et_endDateText;
+    private EditText et_startTimeText;
+    private EditText et_endTimeText;
+    private EditText et_descriptionText ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +34,7 @@ public class CreateEvent extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initializeAndSetListeners();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -36,7 +44,17 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
     }
+    private void initializeAndSetListeners(){
+        et_titleText = (EditText)findViewById(R.id.editText_title);
+        et_startDateText = (EditText)findViewById(R.id.editText_start_date);
+        et_endDateText = (EditText)findViewById(R.id.editText_end_date);
+        et_startTimeText = (EditText)findViewById(R.id.editText_start_time);
+        et_endTimeText = (EditText)findViewById(R.id.editText_end_time);
+        et_descriptionText = (EditText)findViewById(R.id.editText_description);
 
+        EditTextDatePicker startDatePicker = new EditTextDatePicker(this, R.id.editText_start_date);
+
+    }
     /***
      * Adds an event with the specified arguments to the calendar
      * @param title
@@ -72,12 +90,6 @@ public class CreateEvent extends AppCompatActivity {
     }
 
     private void extractDataAndAddEvent(){
-        EditText et_titleText = (EditText)findViewById(R.id.editText_title);
-        EditText et_startDateText = (EditText)findViewById(R.id.editText_start_date);
-        EditText et_endDateText = (EditText)findViewById(R.id.editText_end_date);
-        EditText et_startTimeText = (EditText)findViewById(R.id.editText_start_time);
-        EditText et_endTimeText = (EditText)findViewById(R.id.editText_end_time);
-        EditText et_descriptionText = (EditText)findViewById(R.id.editText_description);
 
         String et_title = et_titleText.getText().toString();
         String et_startDate = et_startDateText.getText().toString();

@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -24,14 +23,14 @@ public class EditTextDatePicker implements OnClickListener, OnDateSetListener {
 
     public EditTextDatePicker(Context context, int editTextViewID)
     {
-        Activity act = (Activity)context;
-        this.editText = (EditText)act.findViewById(editTextViewID);
-        this.editText.setOnClickListener((View.OnClickListener) this);
+        Activity activity = (Activity)context;
+        this.editText = (EditText)activity.findViewById(editTextViewID);
+        this.editText.setOnClickListener(this);
         this.context = context;
     }
 
     @Override
-    public void onClick(DialogInterface dialog, int which) {
+    public void onClick(View v) {
         Calendar myCalendar = Calendar.getInstance();
         new DatePickerDialog(context, this, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
