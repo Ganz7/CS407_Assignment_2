@@ -131,6 +131,12 @@ public class CreateEvent extends AppCompatActivity {
         String et_endTime = et_endTimeText.getText().toString().trim();
         String et_description = et_descriptionText.getText().toString().trim();
 
+        if(et_title.length() == 0 || et_startDate.length() == 0 || et_startTime.length() == 0
+                || et_endDate.length() == 0 || et_endTime.length() == 0){
+            Toast.makeText(this, R.string.missing_date_message, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String startDateString = et_startDate + " " + et_startTime;
         String endDateString = et_endDate + " " + et_endTime;
 
@@ -140,7 +146,7 @@ public class CreateEvent extends AppCompatActivity {
         Date endDate = null;
         try {
             startDate = format.parse(startDateString);
-            endDate = format.parse(startDateString);
+            endDate = format.parse(endDateString);
         } catch (ParseException e) {
             Log.e("Parse Exception", "Error : "+e.getMessage());
         }
