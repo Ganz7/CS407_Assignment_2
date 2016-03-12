@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.provider.CalendarContract.Events;
 
@@ -31,7 +32,7 @@ public class CreateEvent extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                extractDataAndAddEvent();
             }
         });
     }
@@ -71,6 +72,22 @@ public class CreateEvent extends AppCompatActivity {
     }
 
     private void extractDataAndAddEvent(){
+        EditText et_titleText = (EditText)findViewById(R.id.editText_title);
+        EditText et_startDateText = (EditText)findViewById(R.id.editText_start_date);
+        EditText et_endDateText = (EditText)findViewById(R.id.editText_end_date);
+        EditText et_startTimeText = (EditText)findViewById(R.id.editText_start_time);
+        EditText et_endTimeText = (EditText)findViewById(R.id.editText_end_time);
+        EditText et_descriptionText = (EditText)findViewById(R.id.editText_description);
+
+        String et_title = et_titleText.getText().toString();
+        String et_startDate = et_startDateText.getText().toString();
+        String et_startTime = et_startTimeText.getText().toString();
+        String et_endDate = et_endDateText.getText().toString();
+        String et_endTime = et_endTimeText.getText().toString();
+        String et_description = et_descriptionText.getText().toString();
+
+        Toast.makeText(this, et_title + " " + et_startDate + " " +et_startTime+" "+
+        et_endDate + " " + et_endTime+ " " + et_description, Toast.LENGTH_LONG).show();
 
     }
 

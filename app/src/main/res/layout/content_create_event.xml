@@ -15,7 +15,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText_Title"
+        android:id="@+id/editText_title"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:hint="@string/et_title_hint"
@@ -28,7 +28,7 @@
         android:text="@string/tv_start_date"
         android:textSize="18sp"
         android:id="@+id/textView_start_date"
-        android:layout_below="@+id/editText_Title"
+        android:layout_below="@+id/editText_title"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"/>
 
