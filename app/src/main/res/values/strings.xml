@@ -13,4 +13,5 @@
     <!--Text View-->
     <string name="tv_start_date">Event Start</string>
     <string name="tv_end_date">Event End</string>
+    <string name="tv_description">Description</string>
 </resources>

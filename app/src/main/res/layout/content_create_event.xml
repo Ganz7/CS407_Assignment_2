@@ -17,17 +17,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText_Title"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/et_title_hint"/>
+        android:layout_alignParentStart="true"
+        android:hint="@string/et_title_hint"
+        android:textSize="18sp"/>
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/tv_start_date"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:id="@+id/textView_start_date"
         android:layout_below="@+id/editText_Title"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"/>
 
     <EditText
@@ -38,7 +40,8 @@
         android:layout_below="@+id/textView_start_date"
         android:layout_alignParentStart="true"
         android:hint="@string/et_start_date_hint"
-        />
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -47,16 +50,17 @@
         android:id="@+id/editText_start_time"
         android:layout_below="@+id/editText_start_date"
         android:layout_alignParentStart="true"
-        android:hint="@string/et_start_time_hint"/>
+        android:hint="@string/et_start_time_hint"
+        android:textSize="15sp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/tv_end_date"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:id="@+id/textView_end_date"
         android:layout_below="@+id/editText_start_time"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"/>
 
     <EditText
@@ -67,7 +71,7 @@
         android:layout_below="@+id/textView_end_date"
         android:layout_alignParentStart="true"
         android:hint="@string/et_end_date_hint"
-        />
+        android:textSize="15sp"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -76,6 +80,26 @@
         android:id="@+id/editText_end_time"
         android:layout_below="@+id/editText_end_date"
         android:layout_alignParentStart="true"
-        android:hint="@string/et_end_time_hint"/>
+        android:hint="@string/et_end_time_hint"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_description"
+        android:textSize="18sp"
+        android:id="@+id/textView_description"
+        android:layout_below="@+id/editText_end_time"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:id="@+id/editText_description"
+        android:layout_below="@+id/textView_description"
+        android:layout_alignParentStart="true"/>
+
 
 </RelativeLayout>
