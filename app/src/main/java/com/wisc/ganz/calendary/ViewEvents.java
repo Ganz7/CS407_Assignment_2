@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,6 +22,9 @@ public class ViewEvents extends AppCompatActivity {
     private long CALENDAR_ID;
     private static final String CALENDAR_ID_STRING = "CALENDAR_ID";
     private String SELECTED_DATE;
+
+    private ListView eventListView;
+    private EventListCursorAdapter eventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class ViewEvents extends AppCompatActivity {
         SELECTED_DATE = extras.getString(SELECTED_DATE_STRING);
         CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING);
 
+        eventListView = (ListView) findViewById(R.id.event_list);
 
         getEvent(SELECTED_DATE);
     }
@@ -70,8 +74,11 @@ public class ViewEvents extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection,
                 selection, null, null);
 
-
         if (cursor != null && cursor.moveToFirst()) {
+
+            eventAdapter = new EventListCursorAdapter(this, cursor, 0);
+            eventListView.setAdapter(eventAdapterg);
+            /*
             do {
                 //Only display events for this app's calendar
                 if(cursor.getLong(0) == CALENDAR_ID) {
@@ -80,6 +87,7 @@ public class ViewEvents extends AppCompatActivity {
                             " Start-Time: " + (new Date(cursor.getLong(3))).toString(), Toast.LENGTH_SHORT).show();
                 }
             } while ( cursor.moveToNext());
+            */
         }
     }
 

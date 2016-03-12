@@ -12,4 +12,10 @@
     tools:context="com.wisc.ganz.calendary.ViewEvents"
     tools:showIn="@layout/activity_view_events">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/event_list"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
