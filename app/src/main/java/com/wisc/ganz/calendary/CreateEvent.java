@@ -98,13 +98,6 @@ public class CreateEvent extends AppCompatActivity {
     private void addEvent(String title, long startMillis, long endMillis, String description) {
         long calID = 5;
 
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2016, 2, 14, 7, 40);
-        startMillis = beginTime.getTimeInMillis();
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(2016, 2, 14, 8, 40);
-        endMillis = endTime.getTimeInMillis();
-
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
         values.put(Events.DTSTART, startMillis);
@@ -160,10 +153,10 @@ public class CreateEvent extends AppCompatActivity {
             return;
         }
 
-
         Toast.makeText(this, et_title + " " + startDateString +" " +
         et_endDate + " " + et_endTime+ " " + et_description, Toast.LENGTH_LONG).show();
 
+        addEvent(et_title, startMillis, endMillis, et_description);
     }
 
     /***
