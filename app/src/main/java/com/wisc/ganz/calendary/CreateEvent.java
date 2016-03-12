@@ -54,6 +54,8 @@ public class CreateEvent extends AppCompatActivity {
 
         EditTextDatePicker startDatePicker = new EditTextDatePicker(this, R.id.editText_start_date);
 
+        EditTextDatePicker endDatePicker = new EditTextDatePicker(this, R.id.editText_end_date);
+
     }
     /***
      * Adds an event with the specified arguments to the calendar
