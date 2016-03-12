@@ -18,4 +18,5 @@
     <!--Messages-->
     <string name="reverse_date_message">Start Time is after End Time. Please enter valid values.</string>
     <string name="missing_date_message">Please enter valid values for Title and Start and End Event Times</string>
+    <string name="title_activity_view_events">ViewEvents</string>
 </resources>

@@ -117,7 +117,6 @@ public class CreateEvent extends AppCompatActivity {
 
         long eventID = Long.parseLong(uri.getLastPathSegment());
         Toast.makeText(this, "Event ID is" + eventID, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Cal ID is" + CALENDAR_ID, Toast.LENGTH_SHORT).show();
     }
 
     private void extractDataAndAddEvent(){
