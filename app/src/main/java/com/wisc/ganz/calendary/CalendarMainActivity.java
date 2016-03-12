@@ -27,6 +27,8 @@ public class CalendarMainActivity extends AppCompatActivity {
 
     static final int MY_PERMISSIONS_REQUEST_RW_CALENDAR = 101;
     static final String ACCOUNT_NAME = "CYUserAccount";
+    static final String CALENDAR_ID_STRING = "CALENDAR_ID";
+    static long CALENDAR_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class CalendarMainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent createIntent = new Intent(view.getContext(), CreateEvent.class);
+                createIntent.putExtra(CALENDAR_ID_STRING, CALENDAR_ID);
                 startActivity(createIntent);
             }
         });
@@ -69,14 +72,14 @@ public class CalendarMainActivity extends AppCompatActivity {
     }
 
     private void createCalendar() {
-        long calendarID = getCalendarId();
-        if(calendarID != -1){
-            Toast.makeText(this, "Calendar already exists is "+calendarID, Toast.LENGTH_LONG).show();
+        CALENDAR_ID = getCalendarId();
+        if(CALENDAR_ID != -1){
+            Toast.makeText(this, "Calendar already exists is " + CALENDAR_ID, Toast.LENGTH_LONG).show();
         }
         else {
             values = new ContentValues();
             values.put(Calendars.ACCOUNT_NAME, ACCOUNT_NAME);
-            values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);// Do not sync
+            values.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL); // Do not sync
             values.put(Calendars.NAME, "CalYCalendar");
             values.put(Calendars.CALENDAR_DISPLAY_NAME, "CS407's Calendar");
             values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
@@ -91,8 +94,8 @@ public class CalendarMainActivity extends AppCompatActivity {
             builder.appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true");
             calendarURI = getContentResolver().insert(builder.build(), values);
 
-            calendarID = getCalendarId();
-            Toast.makeText(this, "New Calendar:" + calendarID, Toast.LENGTH_LONG).show();
+            CALENDAR_ID = getCalendarId();
+            Toast.makeText(this, "New Calendar:" + CALENDAR_ID, Toast.LENGTH_LONG).show();
         }
     }
 

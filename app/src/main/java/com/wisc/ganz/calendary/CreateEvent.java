@@ -32,12 +32,18 @@ public class CreateEvent extends AppCompatActivity {
     private EditText et_endTimeText;
     private EditText et_descriptionText ;
 
+    private long CALENDAR_ID;
+    private static final String CALENDAR_ID_STRING = "CALENDAR_ID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Bundle extras = getIntent().getExtras();
+        CALENDAR_ID = Long.parseLong(extras.getString(CALENDAR_ID_STRING));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeAndSetListeners();
@@ -96,15 +102,13 @@ public class CreateEvent extends AppCompatActivity {
      * @param description   Event Description
      */
     private void addEvent(String title, long startMillis, long endMillis, String description) {
-        long calID = 5;
-
         ContentResolver cr = getContentResolver();
         ContentValues values = new ContentValues();
         values.put(Events.DTSTART, startMillis);
         values.put(Events.DTEND, endMillis);
         values.put(Events.TITLE, title);
         values.put(Events.DESCRIPTION, description);
-        values.put(Events.CALENDAR_ID, calID);
+        values.put(Events.CALENDAR_ID, CALENDAR_IDgi);
         values.put(Events.EVENT_TIMEZONE, "America/Chicago");
 
         checkForAndRequestPermission();
