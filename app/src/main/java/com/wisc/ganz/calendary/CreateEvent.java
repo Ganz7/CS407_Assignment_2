@@ -1,19 +1,21 @@
 package com.wisc.ganz.calendary;
 
 import android.Manifest;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract.Events;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
-import android.provider.CalendarContract.Events;
 
 import java.util.Calendar;
 
@@ -53,8 +55,25 @@ public class CreateEvent extends AppCompatActivity {
         et_descriptionText = (EditText)findViewById(R.id.editText_description);
 
         EditTextDatePicker startDatePicker = new EditTextDatePicker(this, R.id.editText_start_date);
-
         EditTextDatePicker endDatePicker = new EditTextDatePicker(this, R.id.editText_end_date);
+
+        et_startTimeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(CreateEvent.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        et_startTimeText.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+            }
+        });
 
     }
     /***
