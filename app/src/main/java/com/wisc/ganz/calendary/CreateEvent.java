@@ -64,13 +64,15 @@ public class CreateEvent extends AppCompatActivity {
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
+                //Display a 24-hour format timepicker dialog and set the edit text on selection
                 mTimePicker = new TimePickerDialog(CreateEvent.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        et_startTimeText.setText( selectedHour + ":" + selectedMinute);
+                        et_startTimeText.setText( String.format("%02d",selectedHour) + ":" +
+                                String.format("%02d",selectedMinute));
                     }
-                }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
+                }, hour, minute, true);
+
                 mTimePicker.show();
             }
         });
