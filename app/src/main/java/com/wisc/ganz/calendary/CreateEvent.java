@@ -58,8 +58,7 @@ public class CreateEvent extends AppCompatActivity {
         EditTextDatePicker endDatePicker = new EditTextDatePicker(this, R.id.editText_end_date);
 
         setOnClickListenerHelper(et_startTimeText);
-        setOnClickListenerHelper(et_endimeText);
-
+        setOnClickListenerHelper(et_endTimeText);
 
     }
 
