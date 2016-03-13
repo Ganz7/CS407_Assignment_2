@@ -98,8 +98,8 @@ public class CreateEvent extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(CreateEvent.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        et.setText( String.format("%02d",selectedHour) + ":" +
-                                String.format("%02d",selectedMinute));
+                        et.setText(String.format("%02d", selectedHour) + ":" +
+                                String.format("%02d", selectedMinute));
                     }
                 }, hour, minute, true);
 
@@ -128,8 +128,14 @@ public class CreateEvent extends AppCompatActivity {
 
         Uri uri = cr.insert(Events.CONTENT_URI, values);
 
-        long eventID = Long.parseLong(uri.getLastPathSegment());
-        Toast.makeText(this, "Event ID is" + eventID, Toast.LENGTH_SHORT).show();
+        /**
+         * //Code to get Event ID. Uncomment if needed
+         *
+         * long eventID = Long.parseLong(uri.getLastPathSegment());
+         * Toast.makeText(this, "Event ID is" + eventID, Toast.LENGTH_SHORT).show();
+         *
+         */
+
     }
 
     /***

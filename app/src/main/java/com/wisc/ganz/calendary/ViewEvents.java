@@ -114,7 +114,6 @@ public class ViewEvents extends AppCompatActivity {
                     ad.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(ViewEvents.this, "Clicked : " + eventID, Toast.LENGTH_SHORT).show();
 
                             ContentResolver cr = getContentResolver();
                             ContentValues values = new ContentValues();
@@ -122,6 +121,8 @@ public class ViewEvents extends AppCompatActivity {
 
                             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
                             getContentResolver().delete(deleteUri, null, null);
+
+                            Toast.makeText(ViewEvents.this, "Event Successfuly Deleted", Toast.LENGTH_SHORT).show();
 
                             eventAdapter.changeCursor(null); // Clear the current listview
                             getEvent(dateString); //Call the method recursively to repopulate
