@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.ParseException;
@@ -49,6 +50,9 @@ public class ViewEvents extends AppCompatActivity {
         CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING);
 
         eventListView = (ListView) findViewById(R.id.event_list);
+        TextView emptyText = (TextView)findViewById(R.id.empty);
+        emptyText.setText("No events today");
+        eventListView.setEmptyView(emptyText);
 
         getEvent(SELECTED_DATE);
     }
