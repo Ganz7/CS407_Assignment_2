@@ -4,7 +4,7 @@
     tools:context="com.wisc.ganz.calendary.CalendarMainActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="00"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>
