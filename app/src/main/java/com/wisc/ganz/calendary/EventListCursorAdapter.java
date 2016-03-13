@@ -38,7 +38,7 @@ public class EventListCursorAdapter extends CursorAdapter {
         timeBuilder.append(new Date(cursor.getLong(5)).toString().trim());
         eventTimes.setText(timeBuilder);
 
-        eventDescription.setText("Description: " + cursor.getString(3));
+        eventDescription.setText(cursor.getString(3));
     }
 
 }

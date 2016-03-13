@@ -105,6 +105,7 @@ public class ViewEvents extends AppCompatActivity {
                             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
                             getContentResolver().delete(deleteUri, null, null);
 
+                            eventAdapter.changeCursor(null); //
                             getEvent(dateString); //Call the method recursively to repopulate
                         }
                     });
