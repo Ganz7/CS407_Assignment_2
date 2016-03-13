@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wisc.ganz.calendary">
 
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +20,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".CreateEvent"
+            android:label="@string/title_activity_create_event"
+            android:parentActivityName=".CalendarMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wisc.ganz.calendary.CalendarMainActivity" />
+        </activity>
+        <activity
+            android:name=".ViewEvents"
+            android:label="@string/title_activity_view_events"
+            android:parentActivityName=".CalendarMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.wisc.ganz.calendary.CalendarMainActivity" />
         </activity>
     </application>
 
