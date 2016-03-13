@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Toast;
 
+import java.util.TimeZone;
+
 public class CalendarMainActivity extends AppCompatActivity {
 
     CalendarView calendar;
@@ -92,7 +94,7 @@ public class CalendarMainActivity extends AppCompatActivity {
             values.put(Calendars.CALENDAR_DISPLAY_NAME, "CS407's Calendar");
             values.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
             values.put(Calendars.OWNER_ACCOUNT, "ganzse7en@gmail.com");
-            values.put(Calendars.CALENDAR_TIME_ZONE, "America/Chicago");
+            values.put(Calendars.CALENDAR_TIME_ZONE, TimeZone.getDefault().getID());
             values.put(Calendars.SYNC_EVENTS, 1); //Store the contents on the device
             values.put(Calendars.VISIBLE, 1);
 

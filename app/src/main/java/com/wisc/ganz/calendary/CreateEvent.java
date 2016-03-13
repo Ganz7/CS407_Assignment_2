@@ -22,6 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class CreateEvent extends AppCompatActivity {
 
@@ -109,7 +110,7 @@ public class CreateEvent extends AppCompatActivity {
         values.put(Events.TITLE, title);
         values.put(Events.DESCRIPTION, description);
         values.put(Events.CALENDAR_ID, CALENDAR_ID);
-        values.put(Events.EVENT_TIMEZONE, "America/Chicago");
+        values.put(Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
 
         checkForAndRequestPermission();
 

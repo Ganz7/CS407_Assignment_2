@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /***
@@ -33,9 +34,10 @@ public class EventListCursorAdapter extends CursorAdapter {
         eventTitle.setText(cursor.getString(2));
 
         StringBuilder timeBuilder = new StringBuilder();
-        timeBuilder.append(new Date(cursor.getLong(4)).toString().trim());
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MM/dd/yyyy HH:mm zzz");
+        timeBuilder.append(sdf.format(new Date(cursor.getLong(4))).trim());
         timeBuilder.append(" to ");
-        timeBuilder.append(new Date(cursor.getLong(5)).toString().trim());
+        timeBuilder.append(sdf.format(new Date(cursor.getLong(5))).trim());
         eventTimes.setText(timeBuilder);
 
         eventDescription.setText(cursor.getString(3));
