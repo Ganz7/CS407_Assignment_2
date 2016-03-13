@@ -53,7 +53,7 @@ public class ViewEvents extends AppCompatActivity {
         getEvent(SELECTED_DATE);
     }
 
-    private void getEvent(String dateString){
+    private void getEvent(final String dateString){
         checkForAndRequestPermission();
         String[] projection = new String[] {
                 CalendarContract.Events.CALENDAR_ID,
@@ -104,6 +104,8 @@ public class ViewEvents extends AppCompatActivity {
 
                             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
                             getContentResolver().delete(deleteUri, null, null);
+
+                            getEvent(dateString); //Call the method recursively to repopulate
                         }
                     });
 
