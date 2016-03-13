@@ -46,17 +46,24 @@ public class ViewEvents extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        SELECTED_DATE = extras.getString(SELECTED_DATE_STRING);
-        CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING);
+        SELECTED_DATE = extras.getString(SELECTED_DATE_STRING); //Get Selected Date
+        CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING); //Get App's calendar ID
 
         eventListView = (ListView) findViewById(R.id.event_list);
+        /*
+        In case the day does not have any events, display no events message
+         */
         TextView emptyText = (TextView)findViewById(R.id.empty);
-        emptyText.setText("No events today");
+        emptyText.setText(R.string.no_events);
         eventListView.setEmptyView(emptyText);
 
         getEvent(SELECTED_DATE);
     }
 
+    /***
+     * Gets all the events for the particular day and displays them as a list
+     * @param dateString The date for which the events need to be displayed
+     */
     private void getEvent(final String dateString){
         checkForAndRequestPermission();
         String[] projection = new String[] {
@@ -87,10 +94,17 @@ public class ViewEvents extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection,
                 selection, null, null);
 
+        /*
+            If the day does have events, set the cursor adapter
+         */
         if (cursor != null && cursor.moveToFirst()) {
 
             eventAdapter = new EventListCursorAdapter(this, cursor, 0);
             eventListView.setAdapter(eventAdapter);
+
+            /*
+                Manage delete events on Long Item Press
+             */
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long eventID) {
@@ -109,7 +123,7 @@ public class ViewEvents extends AppCompatActivity {
                             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
                             getContentResolver().delete(deleteUri, null, null);
 
-                            eventAdapter.changeCursor(null); //
+                            eventAdapter.changeCursor(null); // Clear the current listview
                             getEvent(dateString); //Call the method recursively to repopulate
                         }
                     });

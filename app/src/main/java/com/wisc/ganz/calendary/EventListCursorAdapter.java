@@ -26,6 +26,9 @@ public class EventListCursorAdapter extends CursorAdapter {
     }
 
     @Override
+    /***
+     * Map the values on to the list item
+     */
     public void bindView(View view, Context context, Cursor cursor) {
         TextView eventTitle = (TextView) view.findViewById(R.id.event_title);
         TextView eventTimes = (TextView) view.findViewById(R.id.event_timings);

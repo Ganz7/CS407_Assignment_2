@@ -44,11 +44,14 @@ public class CreateEvent extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
-        CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING);
+        CALENDAR_ID = extras.getLong(CALENDAR_ID_STRING); //get the app's calendar ID
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeAndSetListeners();
 
+        /*
+        Floating Action Button to handle add events
+         */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +60,11 @@ public class CreateEvent extends AppCompatActivity {
             }
         });
     }
+
+    /***
+     * Initialize all the UI Elements and set the Date and Time picker listeners
+     * for the relevant elements.
+     */
     private void initializeAndSetListeners(){
         et_titleText = (EditText)findViewById(R.id.editText_title);
         et_startDateText = (EditText)findViewById(R.id.editText_start_date);
@@ -73,6 +81,10 @@ public class CreateEvent extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets up TimePicker Dialog and handles onTimeSet events
+     * @param et EditText for which time picker dialog needs to be set up
+     */
     public void setOnClickListenerHelper(final EditText et){
         et.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +132,9 @@ public class CreateEvent extends AppCompatActivity {
         Toast.makeText(this, "Event ID is" + eventID, Toast.LENGTH_SHORT).show();
     }
 
+    /***
+     * Extract the values from the EditText Elements and add it as an event to the calendar
+     */
     private void extractDataAndAddEvent(){
 
         String et_title = et_titleText.getText().toString().trim();
@@ -129,6 +144,7 @@ public class CreateEvent extends AppCompatActivity {
         String et_endTime = et_endTimeText.getText().toString().trim();
         String et_description = et_descriptionText.getText().toString().trim();
 
+        //If not all the required values have been filled in
         if(et_title.length() == 0 || et_startDate.length() == 0 || et_startTime.length() == 0
                 || et_endDate.length() == 0 || et_endTime.length() == 0){
             Toast.makeText(this, R.string.missing_date_message, Toast.LENGTH_LONG).show();
@@ -157,9 +173,6 @@ public class CreateEvent extends AppCompatActivity {
             Toast.makeText(this, R.string.reverse_date_message, Toast.LENGTH_LONG).show();
             return;
         }
-
-        Toast.makeText(this, et_title + " " + startDateString +" " +
-        et_endDate + " " + et_endTime+ " " + et_description, Toast.LENGTH_LONG).show();
 
         addEvent(et_title, startMillis, endMillis, et_description);
 
