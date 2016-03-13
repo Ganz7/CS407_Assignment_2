@@ -1,9 +1,13 @@
 package com.wisc.ganz.calendary;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
@@ -85,14 +89,21 @@ public class ViewEvents extends AppCompatActivity {
             eventListView.setAdapter(eventAdapter);
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long eventID) {
                     AlertDialog.Builder ad = new AlertDialog.Builder(ViewEvents.this);
                     ad.setTitle("Delete");
                     ad.setMessage("Sure you want to delete record ?");
                     ad.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Toast.makeText(ViewEvents.this, "Clicked : " + id, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ViewEvents.this, "Clicked : " + eventID, Toast.LENGTH_SHORT).show();
+
+                            ContentResolver cr = getContentResolver();
+                            ContentValues values = new ContentValues();
+                            Uri deleteUri = null;
+
+                            deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
+                            getContentResolver().delete(deleteUri, null, null);
                         }
                     });
 
