@@ -48,6 +48,7 @@ public class ViewEvents extends AppCompatActivity {
         checkForAndRequestPermission();
         String[] projection = new String[] {
                 CalendarContract.Events.CALENDAR_ID,
+                CalendarContract.Events._ID,
                 CalendarContract.Events.TITLE,
                 CalendarContract.Events.DESCRIPTION,
                 CalendarContract.Events.DTSTART,
@@ -77,7 +78,7 @@ public class ViewEvents extends AppCompatActivity {
         if (cursor != null && cursor.moveToFirst()) {
 
             eventAdapter = new EventListCursorAdapter(this, cursor, 0);
-            eventListView.setAdapter(eventAdapterg);
+            eventListView.setAdapter(eventAdapter);
             /*
             do {
                 //Only display events for this app's calendar

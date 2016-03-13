@@ -14,7 +14,7 @@ import android.widget.TextView;
 public class EventListCursorAdapter extends CursorAdapter {
 
     public EventListCursorAdapter(Context context, Cursor c, int flags) {
-        super(context, c, 0);
+        super(context, c, flags);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class EventListCursorAdapter extends CursorAdapter {
         TextView eventTimes = (TextView) view.findViewById(R.id.event_timings);
         TextView eventDescription = (TextView) view.findViewById(R.id.event_description);
 
-        
+
     }
 }
