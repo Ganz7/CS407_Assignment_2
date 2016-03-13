@@ -122,7 +122,7 @@ public class ViewEvents extends AppCompatActivity {
                             deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventID);
                             getContentResolver().delete(deleteUri, null, null);
 
-                            Toast.makeText(ViewEvents.this, "Event Successfuly Deleted", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ViewEvents.this, "Event Successfully Deleted", Toast.LENGTH_SHORT).show();
 
                             eventAdapter.changeCursor(null); // Clear the current listview
                             getEvent(dateString); //Call the method recursively to repopulate

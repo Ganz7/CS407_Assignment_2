@@ -128,6 +128,8 @@ public class CreateEvent extends AppCompatActivity {
 
         Uri uri = cr.insert(Events.CONTENT_URI, values);
 
+        Toast.makeText(CreateEvent.this, "Event Successfully Created", Toast.LENGTH_SHORT).show();
+
         /**
          * //Code to get Event ID. Uncomment if needed
          *
