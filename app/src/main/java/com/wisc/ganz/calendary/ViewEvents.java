@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -78,16 +82,18 @@ public class ViewEvents extends AppCompatActivity {
 
             eventAdapter = new EventListCursorAdapter(this, cursor, 0);
             eventListView.setAdapter(eventAdapter);
-            /*
-            do {
-                //Only display events for this app's calendar
-                if(cursor.getLong(0) == CALENDAR_ID) {
+            eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(ViewEvents.this, "Clicked : "+id, Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(this.getApplicationContext(), "In GETEVENTS Title: " + cursor.getString(1) +
-                            " Start-Time: " + (new Date(cursor.getLong(3))).toString(), Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder ad = new AlertDialog.Builder(ViewEvents.this);
+                    ad.setTitle("Delete");
+                    ad.setMessage("Sure you want to delete record ?");
+
+                    return true;
                 }
-            } while ( cursor.moveToNext());
-            */
+            });
         }
     }
 

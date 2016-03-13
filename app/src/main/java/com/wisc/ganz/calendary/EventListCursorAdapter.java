@@ -40,4 +40,5 @@ public class EventListCursorAdapter extends CursorAdapter {
 
         eventDescription.setText(cursor.getString(3));
     }
+
 }
