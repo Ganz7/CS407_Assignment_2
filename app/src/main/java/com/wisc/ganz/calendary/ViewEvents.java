@@ -68,7 +68,8 @@ public class ViewEvents extends AppCompatActivity {
         String selection = "(( " + CalendarContract.Events.DTSTART +
                 " >= " + startTimeInMillis + " ) AND ( " +
                 CalendarContract.Events.DTSTART + " <= " +
-                (startTimeInMillis+NUMBER_OF_MILLIS_IN_A_DAY-1) + " ))";
+                (startTimeInMillis+NUMBER_OF_MILLIS_IN_A_DAY-1) + " ) AND ("+
+                CalendarContract.Events.CALENDAR_ID +" == "+ CALENDAR_ID + "))";
 
         Cursor cursor = getContentResolver().query(CalendarContract.Events.CONTENT_URI, projection,
                 selection, null, null);
