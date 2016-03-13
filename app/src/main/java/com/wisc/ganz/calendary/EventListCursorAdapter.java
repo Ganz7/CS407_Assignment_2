@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import java.util.Date;
+
 /***
  * Custom Cursor Adapter for Event List
  */
@@ -28,6 +30,14 @@ public class EventListCursorAdapter extends CursorAdapter {
         TextView eventTimes = (TextView) view.findViewById(R.id.event_timings);
         TextView eventDescription = (TextView) view.findViewById(R.id.event_description);
 
+        eventTitle.setText(cursor.getString(2));
 
+        StringBuilder timeBuilder = new StringBuilder();
+        timeBuilder.append(new Date(cursor.getLong(4)).toString().trim());
+        timeBuilder.append(" to ");
+        timeBuilder.append(new Date(cursor.getLong(5)).toString().trim());
+        eventTimes.setText(timeBuilder);
+
+        eventDescription.setText(cursor.getString(3));
     }
 }

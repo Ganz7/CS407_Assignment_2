@@ -52,9 +52,7 @@ public class ViewEvents extends AppCompatActivity {
                 CalendarContract.Events.TITLE,
                 CalendarContract.Events.DESCRIPTION,
                 CalendarContract.Events.DTSTART,
-                CalendarContract.Events.DTEND,
-                CalendarContract.Events.ALL_DAY,
-                CalendarContract.Events.EVENT_LOCATION };
+                CalendarContract.Events.DTEND};
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy"); //Custom time format
 
