@@ -1,6 +1,7 @@
 package com.wisc.ganz.calendary;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -84,14 +85,26 @@ public class ViewEvents extends AppCompatActivity {
             eventListView.setAdapter(eventAdapter);
             eventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(ViewEvents.this, "Clicked : "+id, Toast.LENGTH_SHORT).show();
-
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
                     AlertDialog.Builder ad = new AlertDialog.Builder(ViewEvents.this);
                     ad.setTitle("Delete");
                     ad.setMessage("Sure you want to delete record ?");
+                    ad.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Toast.makeText(ViewEvents.this, "Clicked : " + id, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
-                    return true;
+                    ad.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss(); //Close dialog
+                        }
+                    });
+
+                    ad.show();
+                    return false;
                 }
             });
         }
