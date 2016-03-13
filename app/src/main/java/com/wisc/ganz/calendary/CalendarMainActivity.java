@@ -13,8 +13,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Toast;
@@ -56,7 +54,10 @@ public class CalendarMainActivity extends AppCompatActivity {
         });
     }
 
-
+    /***
+     * Initialize the calendar view and add any additional parameters to the calendar
+     * if necessary
+     */
     private void initializeCalendarView() {
         calendar = (CalendarView) findViewById(R.id.calendar_main_view);
     }
@@ -81,10 +82,16 @@ public class CalendarMainActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * Create a calendar locally and set it's ID
+     */
     private void createCalendar() {
         CALENDAR_ID = getCalendarId();
+        /*
+        If Calendar already exists, do not create it!
+         */
         if(CALENDAR_ID != -1){
-            Toast.makeText(this, "Calendar already exists is " + CALENDAR_ID, Toast.LENGTH_LONG).show();
+            return;
         }
         else {
             values = new ContentValues();
@@ -105,7 +112,6 @@ public class CalendarMainActivity extends AppCompatActivity {
             calendarURI = getContentResolver().insert(builder.build(), values);
 
             CALENDAR_ID = getCalendarId();
-            Toast.makeText(this, "New Calendar:" + CALENDAR_ID, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -128,9 +134,13 @@ public class CalendarMainActivity extends AppCompatActivity {
                 return returnValue;
             }
         }
-        return -1;
+        return -1; //Return an invalid ID if the calendar does not exist
     }
 
+    /***
+     * Check for and request calendar Read/Write persmission
+     * Not implemented completely for the scope of this assignment.
+     */
     private void checkForAndRequestPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission_group.CALENDAR) !=
                 PackageManager.PERMISSION_GRANTED) {
@@ -161,26 +171,4 @@ public class CalendarMainActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_calendar_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
