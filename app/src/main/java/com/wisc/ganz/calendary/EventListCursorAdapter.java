@@ -34,7 +34,7 @@ public class EventListCursorAdapter extends CursorAdapter {
         eventTitle.setText(cursor.getString(2));
 
         StringBuilder timeBuilder = new StringBuilder();
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE MM/dd/yyyy HH:mm zzz");
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MM/dd/yyyy HH:mm");
         timeBuilder.append(sdf.format(new Date(cursor.getLong(4))).trim());
         timeBuilder.append(" to ");
         timeBuilder.append(sdf.format(new Date(cursor.getLong(5))).trim());
